@@ -1,4 +1,4 @@
-
+    
 package Domain.Model;
 
 /**
@@ -8,7 +8,6 @@ package Domain.Model;
 public class User {
     
     private String cedula;
-    private String id;
     private String username;
     private String password;
     private String nombre;
@@ -33,10 +32,9 @@ public class User {
         this.telefono = telefono;
         this.estado = estado != null ? estado : "activo";
     }
-    
-    // Métodos getters
-    public String getId() {
-        return id;
+
+    public String getCedula() {
+        return cedula;
     }
 
     public String getUsername() {
@@ -59,13 +57,6 @@ public class User {
         return rol;
     }
 
-    public String getCedula() {
-        if (cedula == null || cedula instanceof String) {
-            throw new IllegalArgumentException("Expected a string, but got an array.");
-        }
-        return cedula;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -78,11 +69,40 @@ public class User {
         return estado;
     }
 
-    // Métodos setters
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
     
 }

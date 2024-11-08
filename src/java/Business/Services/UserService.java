@@ -1,3 +1,4 @@
+
 package Business.Services;
 
 /**
@@ -40,13 +41,13 @@ public class UserService {
     }
 
     // Método para eliminar un usuario
-    public void deleteUser(String code) throws UserNotFoundException, SQLException {
-        userCrud.deleteUser(code);
+    public void deleteUser(String cedula) throws UserNotFoundException, SQLException {
+        userCrud.deleteUser(cedula);
     }
 
     // Método para obtener un usuario por código
-    public User getUserByCode(String code) throws UserNotFoundException, SQLException {
-        return userCrud.getUserByCode(code);
+    public User getUserByCode(String cedula) throws UserNotFoundException, SQLException {
+        return userCrud.getUserByCode(cedula);
     }
 
     // Método para autenticar un usuario (login)
