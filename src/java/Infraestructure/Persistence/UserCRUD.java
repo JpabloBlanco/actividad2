@@ -27,9 +27,9 @@ public class UserCRUD {
             while (rs.next()) {
                 userList.add(
                         new User(
+                                
                                 rs.getString("cedula"),
                                 rs.getString("password"),
-                                rs.getString("username"),
                                 rs.getString("nombre"),
                                 rs.getString("apellido"),
                                 rs.getString("rol"),
@@ -37,7 +37,10 @@ public class UserCRUD {
                                 rs.getString("telefono"),
                                 rs.getString("estado")
                         )
+                        // aqui deberia ir:
+                        //
                 );
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +50,7 @@ public class UserCRUD {
 
     // Método para agregar un nuevo usuario
     public void addUser(User user) throws SQLException, DuplicateUserException {
-        String query = "INSERT INTO Users (code, password, name, email) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO Users (usuarios (password, nombre, apellidos, rol, email, telefono, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
 
 // <------------ Importante aqui se debe agregar el resto de los atributos ------------>
@@ -55,11 +58,10 @@ public class UserCRUD {
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getNombre());
             stmt.setString(4, user.getEmail());
-            stmt.setString(5, user.getUsername());
-            stmt.setString(6, user.getApellidos());
-            stmt.setString(7, user.getRol());
-            stmt.setString(8, user.getTelefono());
-            stmt.setString(9, user.getEstado());
+            stmt.setString(5, user.getApellidos());
+            stmt.setString(6, user.getRol());
+            stmt.setString(7, user.getTelefono());
+            stmt.setString(8, user.getEstado());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -74,19 +76,20 @@ public class UserCRUD {
 
     // Método para actualizar un usuario
     public void updateUser(User user) throws SQLException, UserNotFoundException {
-        String query = "UPDATE Users SET password=?, name=?, email=? WHERE code=?";
+        String query = "UPDATE Users SET password=?, nombre=?, apellidos =?, rol =? email=?, telefono =?, estado =? WHERE cedula =?";
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
-            stmt.setString(1, user.getCedula());
-            stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getNombre());
-            stmt.setString(4, user.getEmail());
-            stmt.setString(5, user.getUsername());
-            stmt.setString(6, user.getApellidos());
-            stmt.setString(7, user.getRol());
-            stmt.setString(8, user.getTelefono());
-            stmt.setString(9, user.getEstado());
-
+            
+            stmt.setString(1, user.getPassword());
+            stmt.setString(2, user.getNombre());
+            stmt.setString(3, user.getApellidos());
+            stmt.setString(4, user.getRol());
+            stmt.setString(5, user.getEmail());
+            stmt.setString(6, user.getTelefono());
+            stmt.setString(7, user.getEstado());
+            
+            stmt.setString(8, user.getCedula());
+            
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
                 throw new UserNotFoundException("El usuario con el código " + user.getCedula() + " no existe.");
@@ -98,14 +101,14 @@ public class UserCRUD {
 
 // Método para eliminar un usuario
     public void deleteUser(String cedula) throws SQLException, UserNotFoundException {
-        String query = "DELETE FROM Users WHERE code=?";
+        String query = "DELETE FROM Users WHERE cedula=?";
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, cedula);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new UserNotFoundException("El usuario con el código " + cedula + " no existe.");
+                throw new UserNotFoundException("El usuario con el cedula " + cedula + " no existe.");
             }
         } catch (SQLException e) {
             throw e; // Propagamos la excepción SQLException para que la maneje el servicio
@@ -114,7 +117,7 @@ public class UserCRUD {
 
 // Método para obtener un usuario por código
     public User getUserByCode(String cedula) throws SQLException, UserNotFoundException {
-        String query = "SELECT * FROM Users WHERE code=?";
+        String query = "SELECT * FROM Users WHERE cedula=?";
         User user = null;
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
@@ -122,9 +125,9 @@ public class UserCRUD {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                user = new User(rs.getString("cedula"),
+                user = new User(
+                        rs.getString("cedula"),
                         rs.getString("password"),
-                        rs.getString("username"),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         rs.getString("rol"),
@@ -159,7 +162,6 @@ public class UserCRUD {
                 user = new User(
                         rs.getString("cedula"),
                         rs.getString("password"),
-                        rs.getString("username"),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         rs.getString("rol"),
@@ -190,7 +192,6 @@ public class UserCRUD {
                 user = new User(
                         rs.getString("cedula"),
                         rs.getString("id"),
-                        rs.getString("username"),
                         rs.getString("password"),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
@@ -208,7 +209,7 @@ public class UserCRUD {
 // Método para buscar usuarios por nombre o email
     public List<User> searchUsers(String searchTerm) {
         List<User> userList = new ArrayList<>();
-        String query = "SELECT * FROM Usuarios WHERE name LIKE ? OR email LIKE ?";
+        String query = "SELECT * FROM Usuarios WHERE nombre LIKE ? OR email LIKE ?";
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setString(1, "%" + searchTerm + "%");
@@ -220,7 +221,6 @@ public class UserCRUD {
                         new User(
                                 rs.getString("cedula"),
                                 rs.getString("password"),
-                                rs.getString("username"),
                                 rs.getString("nombre"),
                                 rs.getString("apellidos"),
                                 rs.getString("rol"),

@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 public class ConnectionDbMySql {
 
-    private static final String URL = "jdbc:mysql://root@localhost/ejercicio4";
+    private static final String URL = "jdbc:mysql://root@localhost/ejercicio04";
     private static final String USER = "root";
     private static final String PASSWORD = "";
     private static final String DRIVER = "com.mysql.jdbc.Driver";

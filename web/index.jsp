@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : index
     Created on : 7/11/2024, 10:05:45 p. m.
     Author     : Juan pablo
@@ -24,7 +24,7 @@
             <a href="<%= request.getContextPath() %>/Controllers/UserController.jsp?action=login">Iniciar Sesión</a> <% } 
                 else { %> 
                 <%-- Si ha iniciado sesión, mostramos el menú de gestión de usuarios --%> 
-                <h3>Hola, <%= loggedInUser.getName() %> (Has iniciado sesión)</h3>
+                <h3>Hola, <%= loggedInUser.getNombre() %> (Has iniciado sesión)</h3>
                 <ul>
                     <li><a href="<%= request.getContextPath() %>/Controllers/UserController.jsp?action=showCreateForm">Agregar Usuario</a></li>
                     <li><a href="<%= request.getContextPath() %>/Controllers/UserController.jsp?action=showFindForm">Buscar Usuario</a></li> 

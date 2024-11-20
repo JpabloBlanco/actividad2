@@ -10,6 +10,7 @@ import Business.Exceptions.UserNotFoundException;
 import Business.Exceptions.DuplicateUserException;
 import Infraestructure.Persistence.UserCRUD;
 import java.sql.SQLException;
+
 import java.util.List;
 
 public class UserService {
@@ -27,16 +28,16 @@ public class UserService {
     }
 
     // Método para agregar un nuevo usuario
-    public void createUser(String cedula, String password, String username, String nombre, String apellidos, String rol, String email, String telefono, String estado)
+    public void createUser(String cedula, String password, String nombre, String apellidos, String rol, String email, String telefono, String estado)
             throws DuplicateUserException, SQLException {
-        User user = new User(cedula , password , username , nombre,apellidos,rol, email, telefono, estado);
+        User user = new User(cedula, password, nombre, apellidos, rol, email, telefono, estado);
         userCrud.addUser(user);
     }
 
     // Método para actualizar un usuario
-    public void updateUser(String cedula, String password, String username, String nombre, String apellidos, String rol, String email, String telefono, String estado)
+    public void updateUser(String cedula, String password, String nombre, String apellidos, String rol, String email, String telefono, String estado)
             throws UserNotFoundException, SQLException {
-        User user = new User(cedula , password , username , nombre,apellidos,rol, email, telefono, estado);
+        User user = new User(cedula , password , nombre,apellidos,rol, email, telefono, estado);
         userCrud.updateUser(user);
     }
 
