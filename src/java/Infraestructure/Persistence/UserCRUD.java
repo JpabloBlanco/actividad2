@@ -17,7 +17,7 @@ public class UserCRUD {
     // Método para obtener todos los usuarios
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        String query = "SELECT * FROM Users";
+        String query = "SELECT * FROM usuarios";
         try {
             Connection con = ConnectionDbMySql.getConnection();
 
@@ -50,7 +50,7 @@ public class UserCRUD {
 
     // Método para agregar un nuevo usuario
     public void addUser(User user) throws SQLException, DuplicateUserException {
-        String query = "INSERT INTO Users (usuarios (password, nombre, apellidos, rol, email, telefono, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO usuarios (cedula, password, nombre, apellidos, rol, email, telefono, estado) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
 
 // <------------ Importante aqui se debe agregar el resto de los atributos ------------>
@@ -76,7 +76,7 @@ public class UserCRUD {
 
     // Método para actualizar un usuario
     public void updateUser(User user) throws SQLException, UserNotFoundException {
-        String query = "UPDATE Users SET password=?, nombre=?, apellidos =?, rol =? email=?, telefono =?, estado =? WHERE cedula =?";
+        String query = "UPDATE usuarios SET password=?, nombre=?, apellidos =?, rol =? email=?, telefono =?, estado =? WHERE cedula =?";
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
             
@@ -101,7 +101,7 @@ public class UserCRUD {
 
 // Método para eliminar un usuario
     public void deleteUser(String cedula) throws SQLException, UserNotFoundException {
-        String query = "DELETE FROM Users WHERE cedula=?";
+        String query = "DELETE FROM usuarios WHERE cedula=?";
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setString(1, cedula);
@@ -117,7 +117,7 @@ public class UserCRUD {
 
 // Método para obtener un usuario por código
     public User getUserByCode(String cedula) throws SQLException, UserNotFoundException {
-        String query = "SELECT * FROM Users WHERE cedula=?";
+        String query = "SELECT * FROM usuarios WHERE cedula=?";
         User user = null;
 
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
@@ -135,6 +135,7 @@ public class UserCRUD {
                         rs.getString("telefono"),
                         rs.getString("estado")
                 );
+                
             } else {
                 throw new UserNotFoundException("El usuario con el código " + cedula + " no existe.");
             }
@@ -147,7 +148,7 @@ public class UserCRUD {
 // Método para autenticar un usuario por email y contraseña (Login)
     public User getUserByEmailAndPassword(String email, String password) throws UserNotFoundException {
         User user = null;
-        String query = "SELECT * FROM Users WHERE email=? AND password=?";
+        String query = "SELECT * FROM usuarios WHERE email=? AND password=?";
 
         try {
             Connection con = ConnectionDbMySql.getConnection();
@@ -182,7 +183,7 @@ public class UserCRUD {
 // Método para obtener un usuario por email
     public User getUserByEmail(String email) throws SQLException, UserNotFoundException {
         User user = null;
-        String query = "SELECT * FROM Users WHERE email=?";
+        String query = "SELECT * FROM usuarios WHERE email=?";
         try (Connection con = ConnectionDbMySql.getConnection(); PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setString(1, email);
@@ -191,14 +192,15 @@ public class UserCRUD {
             if (rs.next()) {
                 user = new User(
                         rs.getString("cedula"),
-                        rs.getString("id"),
                         rs.getString("password"),
                         rs.getString("nombre"),
                         rs.getString("apellido"),
                         rs.getString("rol"),
                         rs.getString("email"),
-                        rs.getString("telefono")
+                        rs.getString("telefono"),
+                        rs.getString("estados")
                 );
+              
             } else {
                 throw new UserNotFoundException("El usuario con el email " + email + " no existe.");
             }

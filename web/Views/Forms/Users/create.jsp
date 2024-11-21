@@ -38,7 +38,7 @@
             <label for="password">Contrasena </label><br>
             <input type="password" id="password" name="password" required> <br><br>
             
-            <input type="submit" value ="Agregar Usuario">
+            <input type="submit" value ="Iniciar Sesión">
         </form>
         <br>
         <a href="<%= request.getContextPath() %>/index.jsp"> Volver a menu principal </a>

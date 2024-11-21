@@ -7,7 +7,7 @@ package Domain.Model;
  */
 public class User {
     
-    private String id;
+    
     private String cedula;
     private String password;
     private String nombre;
@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String telefono;
     private String estado;
-    private String fecha_registro;
+    
     
     public  User(){
         

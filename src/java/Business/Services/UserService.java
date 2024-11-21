@@ -10,7 +10,6 @@ import Business.Exceptions.UserNotFoundException;
 import Business.Exceptions.DuplicateUserException;
 import Infraestructure.Persistence.UserCRUD;
 import java.sql.SQLException;
-
 import java.util.List;
 
 public class UserService {
